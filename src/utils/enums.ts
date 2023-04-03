@@ -5,6 +5,7 @@ export enum ColumnType {
   COMPLETED = "Completed",
 }
 
+//dragging task
 export enum ItemType {
   TASK = "Task",
 }
