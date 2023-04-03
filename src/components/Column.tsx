@@ -11,6 +11,7 @@ import {
 import { ColumnType } from "../utils/enums";
 import { TaskModel } from "../utils/models";
 import Task from "./Task";
+import useColumnTasks from "../hooks/useColumnTasks";
 
 const ColumnColorScheme: Record<ColumnType, string> = {
   Todo: "gray",
@@ -19,30 +20,18 @@ const ColumnColorScheme: Record<ColumnType, string> = {
   Completed: "green",
 };
 
-const mockTasks: TaskModel[] = [
-  {
-    id: "1",
-    title: "Task 1",
-    column: ColumnType.TO_DO,
-    color: "red.100",
-  },
-  {
-    id: "2",
-    title: "Task 2",
-    column: ColumnType.TO_DO,
-    color: "blue.100",
-  },
-  {
-    id: "3",
-    title: "Task 3",
-    column: ColumnType.TO_DO,
-    color: "purple.100",
-  },
-];
-
 function Column({ column }: { column: ColumnType }) {
-  const ColumnTasks = mockTasks.map((task, index) => (
-    <Task key={task.id} index={index} task={task} />
+  const { tasks, addEmptyTask, updateTask, deleteTask } =
+    useColumnTasks(column);
+
+  const ColumnTasks = tasks.map((task, index) => (
+    <Task
+      key={task.id}
+      index={index}
+      task={task}
+      onDelete={deleteTask}
+      onUpdate={updateTask}
+    />
   ));
 
   return (
@@ -65,7 +54,7 @@ function Column({ column }: { column: ColumnType }) {
         _hover={{ bgColor: useColorModeValue("gray.200", "gray.600") }}
         py={2}
         variant="solid"
-        // onClick={addEmptyTask}
+        onClick={addEmptyTask}
         colorScheme="black"
         aria-label="add-task"
         icon={<AddIcon />}
