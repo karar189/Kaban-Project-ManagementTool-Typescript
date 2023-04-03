@@ -34,6 +34,7 @@ function Task({
 
   return (
     <Box
+      ref={ref}
       as="div"
       role="group"
       position="relative"

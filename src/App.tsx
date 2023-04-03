@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Container, Heading, SimpleGrid } from "@chakra-ui/react";
 import { ColumnType } from "./utils/enums";
 import Column from "./components/Column";
@@ -18,7 +17,7 @@ function App() {
         bgGradient="linear(to-r, cyan.400, blue.500, purple.600)"
         bgClip="text"
       >
-        Hello World
+        Kaban Management Tool{" "}
       </Heading>
 
       <Container maxWidth="container.lg" px={4} py={10}>

@@ -9,9 +9,9 @@ import {
 } from "@chakra-ui/react";
 
 import { ColumnType } from "../utils/enums";
-import { TaskModel } from "../utils/models";
 import Task from "./Task";
 import useColumnTasks from "../hooks/useColumnTasks";
+import useColumnDrop from "../hooks/useColumnDrop";
 
 const ColumnColorScheme: Record<ColumnType, string> = {
   Todo: "gray",
@@ -21,8 +21,10 @@ const ColumnColorScheme: Record<ColumnType, string> = {
 };
 
 function Column({ column }: { column: ColumnType }) {
-  const { tasks, addEmptyTask, updateTask, deleteTask } =
+  const { tasks, addEmptyTask, updateTask, deleteTask, dropTaskFrom } =
     useColumnTasks(column);
+
+  const { dropRef, isOver } = useColumnDrop(column, dropTaskFrom);
 
   const ColumnTasks = tasks.map((task, index) => (
     <Task
@@ -60,7 +62,7 @@ function Column({ column }: { column: ColumnType }) {
         icon={<AddIcon />}
       />
       <Stack
-        // ref={dropRef}
+        ref={dropRef}
         direction={{ base: "row", md: "column" }}
         h={{ base: 300, md: 600 }}
         p={4}
@@ -70,7 +72,7 @@ function Column({ column }: { column: ColumnType }) {
         rounded="lg"
         boxShadow="md"
         overflow="auto"
-        // opacity={isOver ? 0.85 : 1}
+        opacity={isOver ? 0.85 : 1}
       >
         {ColumnTasks}
       </Stack>
